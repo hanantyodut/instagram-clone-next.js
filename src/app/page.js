@@ -1,113 +1,150 @@
+"use client";
+import { useEffect, useState } from "react";
+import { Box } from "@mui/material";
+import OrComp from "./components/SubComponent/OrComp";
+import GetTheApp from "./components/SubComponent/GetTheApp";
 import Image from "next/image";
+import Link from "next/link";
+
+const loginImages = [
+	{ id: 1, image: "/assets/screenshot1.png" },
+	{ id: 2, image: "/assets/screenshot2.png" },
+	{ id: 3, image: "/assets/screenshot3.png" },
+	{ id: 4, image: "/assets/screenshot4.png" },
+];
 
 export default function Home() {
-  return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">src/app/page.js</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:h-auto lg:w-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
+	const [currentImageId, setCurrentImageId] = useState(0);
 
-      <div className="relative flex place-items-center before:absolute before:h-[300px] before:w-full sm:before:w-[480px] before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-full sm:after:w-[240px] after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 before:lg:h-[360px] z-[-1]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
+	useEffect(() => {
+		const transitionalInterval = setInterval(() => {
+			setCurrentImageId((prevId) => (prevId + 1) % loginImages.length);
+		}, 2000);
+		return () => clearInterval(transitionalInterval);
+	}, []);
+	return (
+		<Box className="w-screen flex items-center justify-center">
+			<Box className="flex flex-row w-4/5 mt-[4rem] justify-center mb-[7rem]">
+				<Box
+					className="w-[380.3px] relative"
+					sx={{
+						backgroundImage: "url(/assets/home-phones.png)",
+						backgroundSize: "468.32px 634.15px",
+						backgroundPosition: "center",
+						margin: "0 32px 12px 0",
+						height: "650px",
+						backgroundRepeat: "no-repeat",
+						overflow: "hidden",
+					}}>
+					{loginImages.map((image, index) => (
+						<Image
+							key={image.id}
+							src={image.image}
+							alt={`image ${image.id + 1}`}
+							style={{
+								position: "absolute",
+								opacity: currentImageId === index ? 1 : 0,
+								transition: "opacity 1s ease-in-out",
+								marginLeft: "114px",
+								marginTop: "33px",
+							}}
+							width={250}
+							height={538.8}
+						/>
+					))}
+				</Box>
+				<Box className="w-[350px]">
+					<Box
+						sx={{
+							display: "flex",
+							flexDirection: "column",
+							justifyContent: "center",
+							marginTop: "47px",
+							borderRadius: "1px",
+							border: "1px solid #e7e5eb",
+							paddingBottom: "12px",
+						}}>
+						<Box sx={{ margin: "36px auto 12px auto" }}>
+							<Image src="/assets/buatlogin.png" width={175} height={51} />
+						</Box>
+						<Box
+							sx={{
+								display: "flex",
+								flexDirection: "column",
+								alignItems: "center",
+							}}>
+							<form
+								style={{
+									display: "flex",
+									flexDirection: "column",
+									alignItems: "center",
+									marginTop: "24px",
+									width: "100%",
+								}}>
+								<input
+									className="bg-[#fafafa] w-[75%] text-[.7rem] pt-[9px] pb-[7px] pl-[8px] rounded-[2px] border-[1px] border-solid border-gray-200 mb-[0.45rem]"
+									type="email"
+									name="email"
+									id="email"
+									placeholder="Phone number, username, or email"
+								/>
+								<input
+									className="bg-[#fafafa] w-[75%] text-[.7rem] pt-[9px] pb-[7px] pl-[8px] rounded-[2px] border-[1px] border-solid border-gray-200 mb-3"
+									type="password"
+									name="password"
+									id="password"
+									placeholder="Password"
+								/>
 
-      <div className="mb-32 grid text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Docs{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800 hover:dark:bg-opacity-30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Learn{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Templates{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Explore starter templates for Next.js.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Deploy{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50 text-balance`}>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
-  );
+								<button
+									className="rounded-[8px] "
+									style={{
+										backgroundColor: "#4cb5f9",
+										margin: "8px 20px 8px 20px",
+										width: "75%",
+										height: "32px",
+										color: "#fff",
+										fontSize: "14px",
+										fontWeight: "700",
+									}}>
+									Log in
+								</button>
+							</form>
+							<OrComp />
+							<Box sx={{ margin: "8px 40px" }}>
+								<button className="flex flex-row items-center text-[#385185] text-[13px] font-semibold ">
+									<span className="w-[16px] h-[16px] mr-[10px] ">
+										<img src="/assets/fb.png" style={{ objectFit: "cover" }} />
+									</span>
+									Log in with Facebook
+								</button>
+							</Box>
+							<Box
+								sx={{ margin: "8px auto", color: "#00376b", fontSize: "11px" }}>
+								Forgot password?
+							</Box>
+						</Box>
+					</Box>
+					<Box
+						sx={{
+							width: "100%",
+							padding: "20px 0 ",
+							borderRadius: "1px",
+							border: "1px solid #e7e5eb",
+							margin: "10px 0",
+						}}>
+						<p className="text-center text-[13px]">
+							Don't have an account?
+							<Link
+								href="/Register"
+								style={{ color: "#4cb5f9", marginLeft: "5px" }}>
+								Sign up
+							</Link>
+						</p>
+					</Box>
+					<GetTheApp />
+				</Box>
+			</Box>
+		</Box>
+	);
 }
